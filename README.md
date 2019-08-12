@@ -1,4 +1,4 @@
-# asphalt-concrete-calc
+# Автоматизация подбора асфальтобетонной смеси
 
 ## Project setup
 ```
