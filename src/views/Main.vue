@@ -768,16 +768,10 @@ export default {
 
         //Гранулометрический состав материалов в проектируемой смеси, частные остатки, %
 
-
-        //return;
-
-        let k1 = this.coefs.crushedStoneK;
-        let k2 = this.coefs.mineralPowderK;
-
-        this.crushedStone.number = this.floor((k1/this.crushedStone.full[5])*100);
+        this.crushedStone.number = this.floor((this.coefs.crushedStoneK/this.crushedStone.full[5])*100);
         this.crushedStone.partialInDesignMix = this.partialInDesignMixCalc(this.crushedStone.partial, this.crushedStone.number);
 
-        this.mineralPowder.number = this.floor((k2/this.mineralPowder.partial['0.070'])*100);
+        this.mineralPowder.number = this.floor((this.coefs.mineralPowderK/this.mineralPowder.partial['0.070'])*100);
         this.mineralPowder.partialInDesignMix = this.partialInDesignMixCalc(this.mineralPowder.partial, this.mineralPowder.number);
 
         this.sand.number = 100-this.mineralPowder.number-this.crushedStone.number;
