@@ -2,7 +2,15 @@
 <div>
 
     <h3>Щебень</h3>
-    <p>гранитный марки 1200 по прочности при раздавливании в цилиндре.</p>
+    <p>гранитный марки 1200 по прочности при раздавливании в цилиндре.
+
+        <select v-model="crushedStone.specificВitumen">
+            <option v-for="obj of crushedStone.types" :key="obj.name" :value="obj.data">
+                {{obj.name}}
+            </option>
+        </select>   
+
+    </p>
 
     <div class="table-responsive" style="max-width:700px;">
     <table class="table table-bordered table-hover">
@@ -42,7 +50,15 @@
     </div>
 
     <h3>Песок</h3>
-    <p>речной</p>
+    <p>речной
+
+        <select v-model="sand.specificВitumen">
+            <option v-for="obj of sand.types" :key="obj.name" :value="obj.data">
+                {{obj.name}}
+            </option>
+        </select>   
+
+    </p>
 
     <div class="table-responsive" style="max-width:700px;">
     <table class="table table-bordered table-hover">
@@ -88,7 +104,15 @@
     </div>
 
     <h3>Минеральный порошок</h3>
-    <p>известняковый</p>
+    <p>известняковый
+
+        <select v-model="mineralPowder.specificВitumen">
+            <option v-for="obj of mineralPowder.types" :key="obj.name" :value="obj.data">
+                {{obj.name}}
+            </option>
+        </select>   
+
+    </p>
 
     <div class="table-responsive" style="max-width:700px;">
     <table class="table table-bordered table-hover">
@@ -130,15 +154,23 @@
 
 
     <h3>Асфальтобетон</h3>
-    <p>тип Б марки I непрерывной гранулометрии, предназначенного для верхнего слоя покрытия автомобильной дороги II категории во II дорожно-климатической зоне</p>
+    <p>марки I непрерывной гранулометрии, предназначенного для верхнего слоя покрытия автомобильной дороги II категории во II дорожно-климатической зоне
+
+        <select v-model="coefs">
+            <option v-for="obj3 of AB_types" :key="obj3.type" :value="obj3">
+                {{obj3.type}}
+            </option>
+        </select> 
+
+    </p>
 
     <h3>Битум</h3>
     <p>    
         <select v-model="selectedBitumenTypeK">
             <option disabled value="">Выберите</option>
-            <option v-for="item of bitumenType" :key="item.mark" :value="item.k">{{item.mark}}</option>
+            <option v-for="item of bitumenType" :key="item.mark" :value="item">{{item.mark}}</option>
         </select>
-        <span> k = {{ selectedBitumenTypeK }}</span>
+        <span> k = {{ selectedBitumenTypeK.k }}</span>
     </p>
 
     <div>
@@ -308,7 +340,7 @@
         </div>
 
         <div>
-            С учетом коэфицента k = {{selectedBitumenTypeK}} количество битума в асфальтобетонной смеси = {{bitumenConsumptionEndSum}} %
+            С учетом коэфицента k = {{selectedBitumenTypeK.k}} количество битума в асфальтобетонной смеси = {{bitumenConsumptionEndSum}} %
         </div>
 
         <div>
@@ -360,6 +392,28 @@ import pattern from 'patternomaly/dist/patternomaly.js'
 export default {
   data(){
       return{
+          AB_types:[
+              {
+                  type: 'тип А',
+                  crushedStoneK: 55,
+                  mineralPowderK: 6
+              },
+              {
+                  type: 'тип Б',
+                  crushedStoneK: 45,
+                  mineralPowderK: 8
+              },
+              {
+                  type: 'тип В',
+                  crushedStoneK: 35,
+                  mineralPowderK: 11
+              }
+          ],
+          coefs:{
+            type: 'тип Б',
+            crushedStoneK:45,
+            mineralPowderK:8,
+          },
           crushedStone: {
               partial:{
                   '40':0,
@@ -379,7 +433,40 @@ export default {
                   '5':5.2,
                   '2.5':5.6
               },
-              number: 0
+              types:[
+                  {
+                      name: 'Щебень из мелкозернистого гранита',
+                      data: {
+                        '20':4.2,
+                        '15':4.5,
+                        '10':4.7,
+                        '5':5.2,
+                        '2.5':5.6
+                      }
+                  },
+                  {
+                      name: 'Щебень из плотного известняка',
+                      data: {
+                        '20':2.5,
+                        '15':2.9,
+                        '10':3.0,
+                        '5':3.2,
+                        '2.5':4.6
+                      }
+                  },
+                  {
+                      name: 'Щебень из песчаника',
+                      data: {
+                        '20':0,
+                        '15':4.0,
+                        '10':4.5,
+                        '5':4.8,
+                        '2.5':5.0
+                      } 
+                  }
+              ],
+              number: 0,
+              coef: 55,
           },
           sand:{
               partial:{
@@ -405,6 +492,86 @@ export default {
                   '0.071':7,
                   '0.070':14
               },
+              types:[
+                  {
+                      name: 'Природный кварцевый песок',
+                      data: {
+                        '5':2.9,
+                        '2.5':3.3,
+                        '1.25':3.8,
+                        '0.63':4.6,
+                        '0.315':4.8,
+                        '0.16':6.1,
+                        '0.071':7,
+                        '0.070':14
+                      }
+                  },
+                  {
+                      name: 'Высевки из мелкозернистого гранита',
+                      data: {
+                        '5':5.2,
+                        '2.5':5.6,
+                        '1.25':5.7,
+                        '0.63':5.9,
+                        '0.315':6.4,
+                        '0.16':7.4,
+                        '0.071':8.4,
+                        '0.070':18
+                      }
+                  },
+                  {
+                      name: 'Высевки из плотного известняка',
+                      data: {
+                        '5':3.2,
+                        '2.5':4.6,
+                        '1.25':5.3,
+                        '0.63':6.0,
+                        '0.315':7.0,
+                        '0.16':7.3,
+                        '0.071':9.4,
+                        '0.070':16
+                      }
+                  },
+                  {
+                      name: 'Высевки из печаника',
+                      data: {
+                        '5':4.8,
+                        '2.5':5.0,
+                        '1.25':5.2,
+                        '0.63':5.4,
+                        '0.315':5.8,
+                        '0.16':8.5,
+                        '0.071':9.3,
+                        '0.070':14
+                      }
+                  },
+                  {
+                      name: 'Доломитовая пыль, обожженная',
+                      data: {
+                        '5':0,
+                        '2.5':0,
+                        '1.25':13.5,
+                        '0.63':14.25,
+                        '0.315':15.2,
+                        '0.16':15.6,
+                        '0.071':16,
+                        '0.070':22.5
+                      }
+                  },
+                  {
+                      name: 'Песок карьера "Серебряный бор"',
+                      data: {
+                        '5':0,
+                        '2.5':0,
+                        '1.25':3.4,
+                        '0.63':4.2,
+                        '0.315':6.6,
+                        '0.16':7.3,
+                        '0.071':0,
+                        '0.070':0
+                      }
+                  }
+              ],
               number: 0
           },
           mineralPowder:{
@@ -427,7 +594,54 @@ export default {
                   '0.071':9.4,
                   '0.070':16
               },
-              number: 0
+              types:[
+                  {
+                      name: 'Порошок из плотного известняка',
+                      data: {
+                        '1.25':5.3,
+                        '0.63':6.0,
+                        '0.315':7.0,
+                        '0.16':7.3,
+                        '0.071':9.4,
+                        '0.070':16
+                      }
+                  },
+                  {
+                      name: 'Порошок из мелкозернистого гранита',
+                      data: {
+                        '1.25':5.7,
+                        '0.63':5.9,
+                        '0.315':6.4,
+                        '0.16':7.4,
+                        '0.071':8.4,
+                        '0.070':18
+                      }
+                  },
+                  {
+                      name: 'Порошок из песчаника',
+                      data: {
+                        '1.25':5.2,
+                        '0.63':5.4,
+                        '0.315':5.8,
+                        '0.16':8.5,
+                        '0.071':9.3,
+                        '0.070':14
+                      } 
+                  },
+                  {
+                      name: 'Доломитовая пыль, обожженная',
+                      data: {
+                        '1.25':13.5,
+                        '0.63':14.25,
+                        '0.315':15.2,
+                        '0.16':15.6,
+                        '0.071':16,
+                        '0.070':22.5
+                      } 
+                  }
+              ],
+              number: 0,
+              coef: 13
           },
           sumOfPartialLeftovers:{},
           fullLeftovers:{},
@@ -457,7 +671,10 @@ export default {
              k: 0.90
             },
           ],
-          selectedBitumenTypeK:0,
+          selectedBitumenTypeK:{
+             mark: 'БНД 60/90',
+             k: 1.05
+          },
           GOST_fullLeftovers:{},
           GOST_fullWalkways:{},
           keyMap:[],
@@ -551,16 +768,24 @@ export default {
 
         //Гранулометрический состав материалов в проектируемой смеси, частные остатки, %
 
-        this.crushedStone.number = this.floor((45/this.crushedStone.full[5])*100);
+
+        //return;
+
+        let k1 = this.coefs.crushedStoneK;
+        let k2 = this.coefs.mineralPowderK;
+
+        this.crushedStone.number = this.floor((k1/this.crushedStone.full[5])*100);
         this.crushedStone.partialInDesignMix = this.partialInDesignMixCalc(this.crushedStone.partial, this.crushedStone.number);
 
-        this.mineralPowder.number = this.floor((8/this.mineralPowder.partial['0.070'])*100);
+        this.mineralPowder.number = this.floor((k2/this.mineralPowder.partial['0.070'])*100);
         this.mineralPowder.partialInDesignMix = this.partialInDesignMixCalc(this.mineralPowder.partial, this.mineralPowder.number);
 
         this.sand.number = 100-this.mineralPowder.number-this.crushedStone.number;
         this.sand.partialInDesignMix = this.partialInDesignMixCalc(this.sand.partial, this.sand.number);
 
         //Создаем карту ключей по 3ем массивам
+
+
 
         let key_map = [
             ...Object.keys(this.crushedStone.partial), 
@@ -580,6 +805,7 @@ export default {
             }
             this.sumOfPartialLeftovers[key] = this.floor(sum);
         }
+
 
         this.fullLeftovers = this.lastSum(this.sumOfPartialLeftovers);
 
@@ -605,17 +831,22 @@ export default {
             i++;
         }
 
+
+        console.log(this.coefs.type + ' '+ this.coefs.crushedStoneK+' '+this.coefs.mineralPowderK);
+        
+
+
         if(this.keyMapBad.length){
             this.error.currentCode = 2;
             this.buildChart();
-            return;
+            //return;
         }else{
             this.error.currentCode = 0;
             this.buildChart();
         }
 
         
-        
+
 
         let obj_map_main = [this.crushedStone, this.sand, this.mineralPowder];
 
@@ -646,7 +877,9 @@ export default {
         });
 
         this.bitumenConsumptionSum = this.floor(this.bitumenConsumptionSum, 2);
-        this.bitumenConsumptionEndSum = this.floor(this.bitumenConsumptionSum*this.selectedBitumenTypeK, 2);
+        this.bitumenConsumptionEndSum = this.floor(this.bitumenConsumptionSum*this.selectedBitumenTypeK.k, 2);
+
+
 
         this.mess.i++;
         this.mess['mess'] = 'расчёт №'+this.mess.i;
