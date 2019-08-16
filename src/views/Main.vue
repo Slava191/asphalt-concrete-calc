@@ -1,6 +1,10 @@
 <template>
 <div>
 
+    <div class="alert alert-secondary" role="alert">
+        Данная программа по расчету состава асфальтобетонных смесей предназначена для работников строительных лабораторий и студентов строительных специальностей. Для использования данной программы пользователь должен обладать знаниями о назначении и физико-механических свойствах получаемого бетона и его составляющих.
+    </div>
+
     <h3>Щебень</h3>
     <p>гранитный марки 1200 по прочности при раздавливании в цилиндре.
 
@@ -182,7 +186,7 @@
             {{error.getErrorMess}}
         </div>
         <div class="alert alert-success" style="margin-top:20px;" role="alert" v-else-if="error.currentCode === 0 && mess.i">
-            Расчет произведен усспешно.
+            Расчет произведен успешно.
         </div>
 
 
@@ -190,11 +194,11 @@
 
     <hr>
 
-    <h3>Результаты</h3>
+    <h3>Расчет гранулометрического состава проектируемой асфальтобетонной смеси.</h3>
 
     <div class="table-responsive">
     <table class="table table-bordered table-hover">
-        <caption>Таблица 4.4 {{mess['mess']}}</caption>
+        <caption style="display:none;">Таблица 4.4 {{mess['mess']}}</caption>
         <thead class="thead-light">
         <tr>
             <th rowspan="2">Размер частиц, мм</th>
@@ -266,7 +270,7 @@
     </table>
     </div>
 
-    <h3>Гранулометрический состав горячей асфальтобетонной смеси (нерпрерывные плотные), ГОСТ 9128-97. График.</h3>
+    <h3>График гранулометрического состава проектируемой смеси с предельными кривыми по ГОСТ 9128-97.</h3>
 
     <canvas id="myChart"></canvas>
 
@@ -275,7 +279,7 @@
     </div>
 
     <div v-show="!keyMapBad.length">
-        <h3>Расход битума</h3>
+        <h3>Расход количества битума</h3>
 
         <div class="table-responsive">
         <table class="table table-bordered table-hover table-responsive">
@@ -345,7 +349,7 @@
 
         <div>
             <h3>Итоговый состав А/Б смеси:</h3>
-            <p>
+            <p style="font-size:16pt;">
                 <strong>Щебень:</strong> {{crushedStone.number}} % <br>
                 <strong>Песок:</strong> {{sand.number}} % <br>
                 <strong>Минеральный порошок:</strong> {{mineralPowder.number}} % <br>
@@ -900,13 +904,15 @@ export default {
         let mainLineColor = this.error.currentCode === 2 ? 'red' : '#5EC195';
         let mainLineDash = this.error.currentCode === 2 ? [10,5] : [];
 
+        Chart.defaults.global.legend.display = false;
+
         this.myChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: this.keyMap,
                 datasets: [
                 {
-                    label: 'main line',
+                    label: '',
                     data: fullWalkways_data,
                     borderColor: mainLineColor,
                     borderDash: mainLineDash,
@@ -914,7 +920,7 @@ export default {
                     borderWidth: 2
                 },   
                 {
-                    label: 'min',
+                    label: '',
                     data: GOST_fullWalkways_min,
                     backgroundColor: pattern.draw('diagonal',  'rgba(0, 0, 0, 0)', '#E5E5E5'),
                     borderColor: 'rgba(25, 99, 132, 1)',
@@ -922,7 +928,7 @@ export default {
                     borderWidth: 1
                 },
                 {
-                    label: 'max',
+                    label: '',
                     data: GOST_fullWalkways_max,
                     backgroundColor: pattern.draw('diagonal', 'rgba(0, 0, 0, 0)', '#E5E5E5'),
                     borderColor: 'rgba(25, 99, 132, 1)',
