@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="container" id="main">
 
     <div class="alert alert-secondary" role="alert">
         Данная программа по расчету состава асфальтобетонных смесей предназначена для работников строительных лабораторий и студентов строительных специальностей. Для использования данной программы пользователь должен обладать знаниями о назначении и физико-механических свойствах получаемого бетона и его составляющих.
@@ -368,6 +368,14 @@
 <style lang="scss">
 
 $inp-w:40px;
+
+#main{
+    margin-bottom:30px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding:30px;
+    border-radius:3px;
+    background:white;
+}
 
 input[type="text"], input[type="number"]{
     width:$inp-w;
