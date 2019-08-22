@@ -3,10 +3,14 @@
 
     <div class="alert alert-secondary" role="alert">
         Данная программа по расчету состава асфальтобетонных смесей предназначена для работников строительных лабораторий и студентов строительных специальностей. Для использования данной программы пользователь должен обладать знаниями о назначении и физико-механических свойствах получаемого бетона и его составляющих.
+        <br><br>
+        Вся необходимая информация по расчету содержится в пособие:
+        <br>
+        <a href="http://rukamen.ru/literatura/metodichki/laboratornyj%20praktikum%20bitumy-asfaltobeton.pdf" target="_blank">- Т.Н. Акимова, Ю.Э. Васильев, Лабораторный практикум по дорожно-строительным материалам<br /> Общие свойства. Каменные материалы. Минеральные вяжущие. Бетон.</a>
     </div>
 
     <h3>Щебень</h3>
-    <p>гранитный марки 1200 по прочности при раздавливании в цилиндре.
+    <p>
 
         <select v-model="crushedStone.specificВitumen">
             <option v-for="obj of crushedStone.types" :key="obj.name" :value="obj.data">
@@ -16,7 +20,7 @@
 
     </p>
 
-    <div class="table-responsive" style="max-width:700px;">
+    <div class="table-responsive" style="max-width:740px;">
     <table class="table table-bordered table-hover">
         <thead class="thead-light">
         <tr>
@@ -32,7 +36,7 @@
             <th>&lt;5</th>
         </tr>
         </thead>
-        <tr>
+        <tr :class="crushedStone.full['2.5'] && crushedStone.full['2.5'] != 100 ? 'bg-danger':''">
             <td>Частные остатки, %</td>
             <td><input type="number" v-model.number="crushedStone.partial['40']"></td>
             <td><input type="number" v-model.number="crushedStone.partial['20']"></td>
@@ -41,7 +45,7 @@
             <td><input type="number" v-model.number="crushedStone.partial['5']"></td>
             <td><input type="number" v-model.number="crushedStone.partial['2.5']"></td>
         </tr>
-        <tr v-if="mess.i">
+        <tr v-if="mess.i" v-show="false">
             <td>Полные остатки, %</td>
             <td>{{crushedStone.full['40']}}</td>
             <td>{{crushedStone.full['20']}}</td>
@@ -54,7 +58,7 @@
     </div>
 
     <h3>Песок</h3>
-    <p>речной
+    <p>
 
         <select v-model="sand.specificВitumen">
             <option v-for="obj of sand.types" :key="obj.name" :value="obj.data">
@@ -64,7 +68,7 @@
 
     </p>
 
-    <div class="table-responsive" style="max-width:700px;">
+    <div class="table-responsive" style="max-width:740px;">
     <table class="table table-bordered table-hover">
         <thead class="thead-light">
         <tr>
@@ -82,7 +86,7 @@
             <th>&lt;0,071</th>
         </tr>
         </thead>
-        <tr>
+        <tr :class="sand.full['0.070'] && sand.full['0.070'] != 100 ? 'bg-danger':''">
             <td>Частные остатки, %</td>
             <td><input type="number" v-model.number="sand.partial['5']"></td>
             <td><input type="number" v-model.number="sand.partial['2.5']"></td>
@@ -93,7 +97,7 @@
             <td><input type="number" v-model.number="sand.partial['0.071']"></td>
             <td><input type="number" v-model.number="sand.partial['0.070']"></td>
         </tr>
-        <tr v-if="mess.i">
+        <tr v-if="mess.i" v-show="false">
             <td>Полные остатки, %</td>
             <td>{{sand.full['5']}}</td>
             <td>{{sand.full['2.5']}}</td>
@@ -108,7 +112,7 @@
     </div>
 
     <h3>Минеральный порошок</h3>
-    <p>известняковый
+    <p>
 
         <select v-model="mineralPowder.specificВitumen">
             <option v-for="obj of mineralPowder.types" :key="obj.name" :value="obj.data">
@@ -118,7 +122,7 @@
 
     </p>
 
-    <div class="table-responsive" style="max-width:700px;">
+    <div class="table-responsive" style="max-width:740px;">
     <table class="table table-bordered table-hover">
         <thead class="thead-light">
         <tr>
@@ -134,7 +138,7 @@
             <th>&lt;0,071</th>
         </tr>
         </thead>
-        <tr>
+        <tr :class="mineralPowder.full['0.070'] && mineralPowder.full['0.070'] != 100 ? 'bg-danger':''">
             <td>Частные остатки, %</td>
             <td><input type="number" v-model.number="mineralPowder.partial['1.25']"></td>
             <td><input type="number" v-model.number="mineralPowder.partial['0.63']"></td>
@@ -143,7 +147,7 @@
             <td><input type="number" v-model.number="mineralPowder.partial['0.071']"></td>
             <td><input type="number" v-model.number="mineralPowder.partial['0.070']"></td>
         </tr>
-        <tr v-if="mess.i">
+        <tr v-if="mess.i" v-show="false">
             <td>Полные остатки, %</td>
             <td>{{mineralPowder.full['1.25']}}</td>
             <td>{{mineralPowder.full['0.63']}}</td>
@@ -158,7 +162,7 @@
 
 
     <h3>Асфальтобетон</h3>
-    <p>марки I непрерывной гранулометрии, предназначенного для верхнего слоя покрытия автомобильной дороги II категории во II дорожно-климатической зоне
+    <p>
 
         <select v-model="coefs">
             <option v-for="obj3 of AB_types" :key="obj3.type" :value="obj3">
@@ -174,15 +178,14 @@
             <option disabled value="">Выберите</option>
             <option v-for="item of bitumenType" :key="item.mark" :value="item">{{item.mark}}</option>
         </select>
-        <span> k = {{ selectedBitumenTypeK.k }}</span>
     </p>
 
     <div>
-        <button class="btn btn-primary" @click="calculate()">Рассчитать</button>
+        <button class="btn btn-primary" @click="calculate()">Рассчитать</button> 
     </div>
     
   
-        <div class="alert alert-warning" style="margin-top:20px;" role="alert" v-if="error.currentCode">
+        <div class="alert alert-warning" style="margin-top:20px;" role="alert" v-if="error.currentCode && error.currentCode!==2">
             {{error.getErrorMess}}
         </div>
         <div class="alert alert-success" style="margin-top:20px;" role="alert" v-else-if="error.currentCode === 0 && mess.i">
@@ -190,7 +193,7 @@
         </div>
 
 
-    <div v-show="mess.i">
+    <div v-show="mess.i && error.currentCode!==1">
 
     <hr>
 
@@ -279,7 +282,7 @@
     </div>
 
     <div v-show="!keyMapBad.length">
-        <h3>Расход количества битума</h3>
+        <h3>Расчёт количества битума</h3>
 
         <div class="table-responsive">
         <table class="table table-bordered table-hover table-responsive">
@@ -344,11 +347,11 @@
         </div>
 
         <div>
-            С учетом коэфицента k = {{selectedBitumenTypeK.k}} количество битума в асфальтобетонной смеси = {{bitumenConsumptionEndSum}} %
+            С учетом марки битума количество битума в асфальтобетонной смеси - {{bitumenConsumptionEndSum}} %
         </div>
 
         <div>
-            <h3>Итоговый состав А/Б смеси:</h3>
+            <h3>Итоговый состав а/б смеси:</h3>
             <p style="font-size:16pt;">
                 <strong>Щебень:</strong> {{crushedStone.number}} % <br>
                 <strong>Песок:</strong> {{sand.number}} % <br>
@@ -362,12 +365,13 @@
     </div>
 
 </div>
+           
 
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
-$inp-w:40px;
+$inp-w:50px;
 
 #main{
     margin-bottom:30px;
@@ -395,11 +399,18 @@ input[type="number"]:focus {
   -moz-appearance: number-input;
 }
 
+a{
+    color:#383D41;
+}
+
 </style>
 
 <script>
 
 import pattern from 'patternomaly/dist/patternomaly.js'
+
+import { bus } from '@/main.js'
+
 
 export default {
   data(){
@@ -428,12 +439,12 @@ export default {
           },
           crushedStone: {
               partial:{
-                  '40':0,
-                  '20':8.3,
-                  '15':21.5,
-                  '10':35.2,
-                  '5':32.4,
-                  '2.5':2.6
+                  '40':'',
+                  '20':'',
+                  '15':'',
+                  '10':'',
+                  '5':'',
+                  '2.5':''
               },
               full:{},
               partialInDesignMix:{},
@@ -482,14 +493,14 @@ export default {
           },
           sand:{
               partial:{
-                  '5':9.8,
-                  '2.5':14,
-                  '1.25':16,
-                  '0.63':20.9,
-                  '0.315':20.6,
-                  '0.16':13.6,
-                  '0.071':3.4,
-                  '0.070':1.7
+                  '5':'',
+                  '2.5':'',
+                  '1.25':'',
+                  '0.63':'',
+                  '0.315':'',
+                  '0.16':'',
+                  '0.071':'',
+                  '0.070':''
               },
               full:{},
               partialInDesignMix:{},
@@ -588,12 +599,12 @@ export default {
           },
           mineralPowder:{
               partial:{
-                  '1.25':0.9,
-                  '0.63':2.8,
-                  '0.315':8.2,
-                  '0.16':8.5,
-                  '0.071':7.6,
-                  '0.070':72
+                  '1.25':'',
+                  '0.63':'',
+                  '0.315':'',
+                  '0.16':'',
+                  '0.071':'',
+                  '0.070':''
               },
               full:{},
               partialInDesignMix:{},
@@ -721,7 +732,7 @@ export default {
       }
   },
   methods:{
-
+    
       floor(num, decimals=1){
           //return Math.floor(num * 10) / 10;
         return Number(Math.round(num+'e'+decimals)+'e-'+decimals);
@@ -925,7 +936,7 @@ export default {
                     borderColor: mainLineColor,
                     borderDash: mainLineDash,
                     fill: false,
-                    borderWidth: 2
+                    borderWidth: 4
                 },   
                 {
                     label: '',
@@ -972,10 +983,48 @@ export default {
         
 
         
+      },
+      setTestData(){
+          this.crushedStone.partial = {
+            '40':0,
+            '20':8.3,
+            '15':21.5,
+            '10':35.2,
+            '5':32.4,
+            '2.5':2.6
+          }
+
+          this.sand.partial = {
+            '5':9.8,
+            '2.5':14,
+            '1.25':16,
+            '0.63':20.9,
+            '0.315':20.6,
+            '0.16':13.6,
+            '0.071':3.4,
+            '0.070':1.7
+          }
+
+          this.mineralPowder.partial = {
+            '1.25':0.9,
+            '0.63':2.8,
+            '0.315':8.2,
+            '0.16':8.5,
+            '0.071':7.6,
+            '0.070':72
+          }
       }
 
   },
   mounted(){
+
+     const inputs = document.getElementsByTagName('input');
+
+     for(const input of inputs){
+         input.placeholder = '1-100';
+     }
+
+     bus.$on('setTestData', this.setTestData);
 
   }
 }

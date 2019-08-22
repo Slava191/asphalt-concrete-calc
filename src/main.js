@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'chart.js/dist/Chart.js'
 import 'chart.js/dist/Chart.css'
 
+export const bus = new Vue()
 
 Vue.config.productionTip = false
 
